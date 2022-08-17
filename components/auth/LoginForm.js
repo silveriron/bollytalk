@@ -24,6 +24,16 @@ const LoginForm = () => {
       });
       const data = await res.json();
       console.log(data);
+    } else {
+      const res = await fetch("/api/auth/signin", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      console.log(data);
     }
   };
 
