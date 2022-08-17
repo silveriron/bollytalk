@@ -1,21 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../ui/Input";
 import style from "./LoginForm.module.css";
 import { signIn } from "next-auth/react";
 import { authActions } from "../../store/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 const LoginForm = () => {
   const [login, setLogin] = useState(true);
-  const [isSetUp, setIsSetUp] = useState(false);
+  const isLogin = useSelector((state) => state.auth.isLogin);
   const dispatch = useDispatch();
   const router = useRouter();
+  useEffect(() => {
+    if (isLogin) {
+      router.replace("/");
+    }
+  }, []);
 
   const funcChangeHandler = () => {
     setLogin((prev) => !prev);
   };
 
+  const signInHandler = async (email, password) => {
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (!result.ok) {
+      return console.log(result);
+    }
+    console.log("login");
+    dispatch(authActions.login());
+  };
   const LoginHandler = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -33,23 +51,13 @@ const LoginForm = () => {
 
       if (res.ok) {
         dispatch(authActions.signUp(email));
-        router.push("/auth/profile");
+        await signInHandler(email, password);
+        router.push("/profile");
       } else {
         console.log(data.message);
       }
     } else {
-      const result = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
-      });
-
-      if (!result.ok) {
-        return console.log(result);
-      }
-      console.log("login");
-      dispatch(authActions.login());
-      router.replace("/");
+      await signInHandler(email, password);
     }
   };
 
