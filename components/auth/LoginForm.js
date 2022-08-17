@@ -9,8 +9,22 @@ const LoginForm = () => {
     setLogin((prev) => !prev);
   };
 
-  const LoginHandler = (e) => {
+  const LoginHandler = async (e) => {
     e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    if (!login) {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+    }
   };
 
   return (

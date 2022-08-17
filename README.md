@@ -1,4 +1,4 @@
-# BolyTalk
+# BollyTalk
 
 kakaotalk clone coding
 
