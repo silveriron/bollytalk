@@ -4,7 +4,6 @@ import connect from "../../../lib/db";
 const signup = async (req, res) => {
   if (req.method === "POST") {
     const { email, password } = req.body;
-
     const regEmail =
       /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
     if (!regEmail.test(email) || password.trim() < 6) {
@@ -24,11 +23,9 @@ const signup = async (req, res) => {
       .insertOne({ email, password: hashedPassword });
 
     if (!result) {
-      return res
-        .status(500)
-        .json({
-          message: "서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.",
-        });
+      return res.status(500).json({
+        message: "서버에 문제가 있습니다. 잠시 후 다시 시도해주세요.",
+      });
     }
 
     res.status(201).json({ message: "회원 가입이 완료되었습니다." });

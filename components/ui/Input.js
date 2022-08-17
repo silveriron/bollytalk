@@ -9,7 +9,7 @@ const Input = ({ name, label, type }) => {
             <label htmlFor={name}>{label ? label : name}</label>
           </th>
           <td>
-            <input id={name} type={type} />
+            <input id={name} type={type} required />
           </td>
         </tr>
       </thead>

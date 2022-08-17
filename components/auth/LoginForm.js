@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 
 const LoginForm = () => {
   const [login, setLogin] = useState(true);
+  const [isSetUp, setIsSetUp] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -29,7 +30,13 @@ const LoginForm = () => {
         },
       });
       const data = await res.json();
-      console.log(data);
+
+      if (res.ok) {
+        dispatch(authActions.signUp(email));
+        router.push("/auth/profile");
+      } else {
+        console.log(data.message);
+      }
     } else {
       const result = await signIn("credentials", {
         redirect: false,
@@ -40,7 +47,8 @@ const LoginForm = () => {
       if (!result.ok) {
         return console.log(result);
       }
-      dispatch(authActions.login);
+      console.log("login");
+      dispatch(authActions.login());
       router.replace("/");
     }
   };

@@ -1,22 +1,40 @@
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { authActions } from "../store/auth";
 
-const Home = () => {
+const Home = (props) => {
   const router = useRouter();
-  const isLogin = useSelector((state) => state.auth.isLogin);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isLogin) {
+    if (!props.session) {
       router.replace("/auth");
     }
   }, []);
 
-  if (isLogin) {
+  if (props.session) {
+    dispatch(authActions.login());
+
     return <p>Home Page</p>;
   }
+};
 
-  return;
+export const getServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+
+  if (session) {
+    return {
+      props: {
+        session,
+      },
+    };
+  } else {
+    return {
+      props: {},
+    };
+  }
 };
 
 export default Home;
