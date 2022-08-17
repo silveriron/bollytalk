@@ -1,0 +1,37 @@
+.loginForm {
+    width: 70%;
+    margin: 0 auto;
+    padding-top: 40px;
+}
+
+.loginForm h1 {
+    text-align: center;
+    font-size: var(--font-size-title)
+}
+
+.loginForm p {
+    text-align: center;
+    margin-top: 32px;
+    font-size: var(--font-size-p)
+
+}
+
+.loginForm p span {
+    border-bottom: 1px solid white;
+}
+
+.btnDiv {
+    text-align: end;
+    margin-top: 24px;
+    margin-right: 3px;
+}
+
+.btnDiv button {
+    border: none;
+    width: 80px;
+    height: 40px;
+    font-size: var(--font-size-p);
+    /* padding: 6px 10px; */
+    border-radius: 4px;
+    background: white;
+}

@@ -1,0 +1,20 @@
+.input {
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+
+.input th {
+    width: 90px;
+
+}
+
+.input label {
+    font-size: var(--font-size-p)
+}
+
+.input input {
+    width: 100%;
+    font-size: var(--font-size-p)
+
+}
