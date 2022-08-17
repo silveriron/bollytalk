@@ -1,20 +1,15 @@
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
-const Home = ({ isLogin }) => {
+const Home = () => {
   const router = useRouter();
-  if (!isLogin) {
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
+  if (!isLogin && router) {
     router.replace("/auth");
     return;
   }
   return <p>Home Page</p>;
-};
-
-export const getServerSideProps = () => {
-  return {
-    props: {
-      isLogin: false,
-    },
-  };
 };
 
 export default Home;
