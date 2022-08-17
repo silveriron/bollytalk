@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+import Navigator from "../components/layout/Navigator";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <Navigator>
+      <Component {...pageProps} />
+    </Navigator>
+  );
 }
 
-export default MyApp
+export default MyApp;
