@@ -1,9 +1,15 @@
 import { useState } from "react";
 import Input from "../ui/Input";
 import style from "./LoginForm.module.css";
+import { signIn } from "next-auth/react";
+import { authActions } from "../../store/auth";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 const LoginForm = () => {
   const [login, setLogin] = useState(true);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const funcChangeHandler = () => {
     setLogin((prev) => !prev);
@@ -25,15 +31,17 @@ const LoginForm = () => {
       const data = await res.json();
       console.log(data);
     } else {
-      const res = await fetch("/api/auth/signin", {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
       });
-      const data = await res.json();
-      console.log(data);
+
+      if (!result.ok) {
+        return console.log(result);
+      }
+      dispatch(authActions.login);
+      router.replace("/");
     }
   };
 
