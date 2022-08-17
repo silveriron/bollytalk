@@ -17,6 +17,19 @@ const ProfileForm = (props) => {
 
   const nickNameHandler = async (e) => {
     e.preventDefault();
+    const nickName = e.target.nickName.value;
+    const res = await fetch("/api/profile", {
+      method: "PATCH",
+      body: JSON.stringify({ nickName, email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+    }
   };
 
   const welcome = (
