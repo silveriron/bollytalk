@@ -8,14 +8,13 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 const LoginForm = () => {
+  const { data: session } = useSession();
   const [login, setLogin] = useState(true);
-  const isLogin = useSelector((state) => state.auth.isLogin);
   const dispatch = useDispatch();
   const router = useRouter();
-  const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (isLogin) {
+    if (session) {
       router.replace("/");
     }
   }, []);
@@ -54,7 +53,6 @@ const LoginForm = () => {
 
       if (res.ok) {
         dispatch(authActions.signUp(email));
-        await signInHandler(email, password);
         router.push("/profile");
       } else {
         console.log(data.message);

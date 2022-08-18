@@ -26,9 +26,6 @@ export default NextAuth({
           name: data.nickName,
           email: data.email,
         };
-
-        console.log(user);
-
         return user;
       },
     }),

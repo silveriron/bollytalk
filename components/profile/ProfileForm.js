@@ -6,11 +6,12 @@ import { useRouter } from "next/router";
 import style from "./ProfileForm.module.css";
 
 const ProfileForm = () => {
-  const { data: session, status } = useSession();
   const email = useSelector((state) => state.auth.email);
+  const isLogin = useSelector((state) => state.auth.isLogin);
+  const firstProfile = useSelector((state) => state.auth.firstProfile);
   const router = useRouter();
 
-  if (session) {
+  if (isLogin) {
     const nickNameHandler = async (e) => {
       e.preventDefault();
       const nickName = e.target.nickName.value;
@@ -28,6 +29,7 @@ const ProfileForm = () => {
         console.log(data.message);
         return;
       }
+
       router.replace("/");
     };
 
@@ -45,7 +47,7 @@ const ProfileForm = () => {
 
     return (
       <div className={style.profileForm}>
-        {email ? welcome : oldUser}
+        {firstProfile ? welcome : oldUser}
         <form onSubmit={nickNameHandler}>
           <Input name="nickName" label="닉네임" type="text" />
           <div className={style.btnDiv}>

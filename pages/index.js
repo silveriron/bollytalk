@@ -2,6 +2,7 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import UserInfo from "../components/ui/UserInfo";
 import { authActions } from "../store/auth";
 
 const Home = (props) => {
@@ -22,7 +23,14 @@ const Home = (props) => {
     }
   }, [props.session, router, dispatch]);
 
-  return <>{nickName && <p>{nickName}</p>}</>;
+  if (props.session) {
+    return (
+      <>
+        <h2>친구</h2>
+        <UserInfo nickName={props.session?.user?.name} />
+      </>
+    );
+  }
 };
 
 export const getServerSideProps = async (context) => {
