@@ -5,7 +5,7 @@ import style from "./Navigator.module.css";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
-const Navigator = (props) => {
+const Navigators = (props) => {
   const isLogin = useSelector((state) => state.auth.isLogin);
   return (
     <>
@@ -41,4 +41,4 @@ const Navigator = (props) => {
   );
 };
 
-export default Navigator;
+export default Navigators;

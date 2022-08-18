@@ -5,12 +5,15 @@ import { signIn } from "next-auth/react";
 import { authActions } from "../../store/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 const LoginForm = () => {
   const [login, setLogin] = useState(true);
   const isLogin = useSelector((state) => state.auth.isLogin);
   const dispatch = useDispatch();
   const router = useRouter();
+  const { data: session, status } = useSession();
+
   useEffect(() => {
     if (isLogin) {
       router.replace("/");
@@ -31,9 +34,9 @@ const LoginForm = () => {
     if (!result.ok) {
       return console.log(result);
     }
-    console.log("login");
-    dispatch(authActions.login());
+    router.replace("/");
   };
+
   const LoginHandler = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;

@@ -8,20 +8,28 @@ export default NextAuth({
     Credentials({
       async authorize(credentials) {
         const { email, password } = credentials;
-        console.log(email, password);
         const db = await connect();
-        const user = await db.collection("user").findOne({ email });
-        if (!user) {
+        const data = await db.collection("user").findOne({ email });
+        if (!data) {
           db.close();
           throw new Error("로그인 정보를 다시 확인해주세요.");
         }
 
-        const compared = await comparePassword(password, user.password);
+        const compared = await comparePassword(password, data.password);
         if (!compared) {
           db.close();
           throw new Error("로그인 정보를 다시 확인해주세요.");
         }
-        return user.email;
+
+        const user = {
+          id: data._id.toString(),
+          name: data.nickName,
+          email: data.email,
+        };
+
+        console.log(user);
+
+        return user;
       },
     }),
   ],
