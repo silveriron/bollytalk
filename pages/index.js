@@ -1,14 +1,13 @@
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import UserInfo from "../components/ui/UserInfo";
+import { useDispatch } from "react-redux";
+import UserInfo from "../components/friends/UserInfo";
 import { authActions } from "../store/auth";
 
 const Home = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const nickName = useSelector((state) => state.auth.nickName);
 
   useEffect(() => {
     if (!props.session) {
@@ -20,17 +19,9 @@ const Home = (props) => {
           nickName: props.session.user.name,
         })
       );
+      router.replace("/friends");
     }
   }, [props.session, router, dispatch]);
-
-  if (props.session) {
-    return (
-      <>
-        <h2>친구</h2>
-        <UserInfo nickName={props.session?.user?.name} />
-      </>
-    );
-  }
 };
 
 export const getServerSideProps = async (context) => {

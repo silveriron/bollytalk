@@ -1,3 +1,8 @@
+.main {
+    width: 90%;
+    margin: 0 auto;
+}
+
 .navBar {
     position: fixed;
     bottom: 0;

@@ -4,8 +4,8 @@ const UserInfo = ({ nickName }) => {
   return (
     <>
       <div className={style.info}>
-        <p>{nickName}</p>
-        <p>볼리는 귀여워</p>
+        <p className={style.nickName}>{nickName}</p>
+        <p className={style.comment}>볼리는 귀여워</p>
       </div>
     </>
   );

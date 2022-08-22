@@ -9,7 +9,7 @@ const Navigators = (props) => {
   const isLogin = useSelector((state) => state.auth.isLogin);
   return (
     <>
-      <main>{props.children}</main>
+      <main className={style.main}>{props.children}</main>
       {isLogin && (
         <nav className={style.navBar}>
           <ul>
